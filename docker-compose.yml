@@ -1,14 +1,12 @@
-version: '3.8'
-
 services:
   localstack:
     image: localstack/localstack:latest
     container_name: localstack
     ports:
-      - "4566:4566"           # Edge port (all services)
-      - "4571:4571"           # Old S3 port (optional, for legacy)
+      - "4566:4566" # Edge port (all services)
+      - "4571:4571" # Old S3 port (optional, for legacy)
     environment:
-      - SERVICES=s3,ec2,iam   # Enable only the services you want
+      - SERVICES=s3,ec2,iam # Enable only the services you want
       - DEBUG=1
       - DATA_DIR=/tmp/localstack/data
       - LOCALSTACK_HOST=localhost
@@ -16,5 +14,4 @@ services:
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
     volumes:
-      - "./localstack:/tmp/localstack"   # Persist LocalStack data
       - "/var/run/docker.sock:/var/run/docker.sock"

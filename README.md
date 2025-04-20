@@ -16,6 +16,28 @@ This project lets you practice and showcase DevOps skills by provisioning AWS-li
 1. Clone this repository
 2. (Setup and usage instructions will be added as the project develops)
 
+## AWS CLI Configuration for LocalStack
+
+To interact with LocalStack using the AWS CLI, you must configure credentials—even though LocalStack does not validate them. You can set a dedicated profile with dummy values:
+
+1. Run the following command:
+
+```sh
+aws configure --profile localstack
+```
+
+2. When prompted, enter:
+- AWS Access Key ID: `test`
+- AWS Secret Access Key: `test`
+- Default region name: `eu-central-1`
+- Default output format: `json` (or leave blank)
+
+3. Use the profile in all AWS CLI commands targeting LocalStack:
+
+```sh
+aws --endpoint-url=http://localhost:4566 s3 ls --profile localstack
+```
+
 ## LocalStack Usage
 
 Start LocalStack (in the background):
