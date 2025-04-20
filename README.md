@@ -1,6 +1,6 @@
 # AWS IaC Sandbox (Local Only)
 
-This project lets you practice and showcase DevOps skills by provisioning AWS-like infrastructure locally using Terraform and LocalStack.
+This project is to practice my DevOps skills by provisioning AWS-like infrastructure locally using Terraform and LocalStack.
 
 ## Purpose
 - Use Infrastructure as Code (IaC) safely and freely
