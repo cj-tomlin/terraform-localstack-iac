@@ -2,6 +2,32 @@
 
 This project lets you practice and showcase DevOps skills by provisioning AWS-like infrastructure locally using Terraform and LocalStack.
 
+## Introduction
+This project enables safe, cost-free, and repeatable infrastructure as code (IaC) development and testing—without touching real AWS!
+
+---
+
+## Architecture Diagram
+
+```mermaid
+graph TD;
+  A[Terraform] -->|provisions| B(LocalStack)
+  A --> C[S3 Module]
+  A --> D[IAM User Module]
+  A --> E[EC2 Module]
+  A --> F[Security Group Module]
+  C -->|creates| B
+  D -->|creates| B
+  E -->|creates| B
+  F -->|creates| B
+  E --> F
+  E --> D
+```
+
+*This diagram shows how Terraform uses modular code to provision resources in LocalStack. Modules are reusable and composable, and can reference each other or be used independently in example configs.*
+
+---
+
 ## Purpose
 - Use Infrastructure as Code (IaC) safely and freely
 - Emulate AWS services (EC2, S3, IAM, etc.) with LocalStack
@@ -73,4 +99,18 @@ To enable additional AWS services in LocalStack:
    docker-compose up -d
    ```
 
-You can find the full list of supported services in the [LocalStack documentation](https://docs.localstack.cloud/references/aws-api-support/).
+### IAM User vs. EC2 Role Modules: Why They're Separate
+
+This project intentionally separates the IAM user module (for user/least-privilege demos) and the resources for EC2 IAM roles/profiles (used inline or in a dedicated module for EC2). This follows Terraform best-practice modularity:
+
+- **IAM User Module:**
+  - Used for creating users, policies, and least-privilege demos.
+  - See `terraform/iam-example.tf` for usage.
+- **EC2 IAM Role/Profile:**
+  - Created inline in `terraform/ec2-example.tf` (or could be moved to a dedicated module).
+  - Used for attaching roles to EC2 instances for AWS API access.
+
+**Why?**
+- IAM users and EC2 roles serve different purposes in AWS.
+- Keeping modules focused and composable makes your IaC more reusable, testable, and portfolio-friendly.
+- This structure demonstrates real-world modular Terraform patterns.
